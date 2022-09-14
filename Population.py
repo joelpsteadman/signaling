@@ -6,7 +6,7 @@ class Population:
         self.size = size
         self.females = []
         self.males = []
-        self.sample_size = 30 # number of men that each woman considers
+        self.sample_size = 10 # number of men that each woman considers
         for i in range(size):
             individual = Individual()
             if individual.sex == 'F':
@@ -31,13 +31,13 @@ class Population:
                 values.append(value)
             for i in range(len(signals)):
                 perceived_values.append(female.trust * signals[i] + random.uniform(-.01, 0.01))
-            max_value = max(values)
-            max_index = values.index(max_value)
+            max_value = max(perceived_values)
+            max_index = perceived_values.index(max_value)
             individual = Individual(female, males[max_index])
             # signal, value = individual.calculate_signal_and_value()
             female.num_children += 1
             males[max_index].num_children += 1
-            if individual.quality >= random.random(): # thus, an individual with quality .7 has .7 likelihood of getting into next gen
+            if individual.quality >= random.random()**4: # thus, an individual with quality .7 has .7 likelihood of getting into next gen
                 next_generation.append(individual)
             self.females.append(female)
         previous_generation = {"males": self.males, "females": self.females}
