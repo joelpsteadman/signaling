@@ -21,7 +21,7 @@ class Population:
         while len(next_generation) < self.size:
             # num = len(self.females)
             female = self.females.pop(0)
-            males = random.sample(self.males, 10)
+            males = random.sample(self.males, self.sample_size)
             signals = []
             values = []
             perceived_values = []
