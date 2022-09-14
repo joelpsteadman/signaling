@@ -14,7 +14,7 @@ class Population:
             elif individual.sex == 'M':
                 self.males.append(individual)
             else:
-                raise Exception("Individual did not have a sex")
+                raise Exception("Individual's sex is not set")
 
     def evolve(self):
         next_generation = []
@@ -35,9 +35,12 @@ class Population:
             max_index = values.index(max_value)
             individual = Individual(female, males[max_index])
             signal, value = individual.calculate_signal_and_value()
+            female.num_children += 1
+            males[max_index].num_children += 1
             if value >= random.random(): # thus, an individual with value .7 has .7 likelihood of getting into next gen
                 next_generation.append(individual)
             self.females.append(female)
+        previous_generation = {"males": self.males, "females": self.females}
 
         self.females = []
         self.males = []
@@ -48,3 +51,5 @@ class Population:
                 self.males.append(individual)
             else:
                 raise Exception("Individual did not have a sex")
+
+        return previous_generation
