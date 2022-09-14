@@ -1,6 +1,6 @@
 from numpy import random
 
-COST_OF_CHILD = 0.5
+# COST_OF_CHILD = 0.5
 
 class Individual:
     def __init__(self, mother = 0, father = 0):
@@ -12,14 +12,14 @@ class Individual:
 
     def _init_no_parents(self):
         self.sex = random.choice(['M', 'F'])
-        self.loyalty = random.uniform(0.01, 0.99)
+        self.quality = random.uniform(0.01, 0.99)
         self.true_signal = random.uniform(0.01, 0.99)
         self.false_signal = random.uniform(0.01, 0.99)
         self.trust = random.uniform(0.01, 0.99)
 
     def _init_with_parents(self, mother, father):
         self.sex = random.choice(['M', 'F'])
-        self.loyalty = self._inherit_trait(mother.loyalty, father.loyalty)
+        self.quality = self._inherit_trait(mother.quality, father.quality)
         self.true_signal = self._inherit_trait(mother.true_signal, father.true_signal)
         self.false_signal = self._inherit_trait(mother.false_signal, father.false_signal)
         self.trust = self._inherit_trust(mother.trust, father.trust)
@@ -37,14 +37,14 @@ class Individual:
         return trait
 
     def calculate_signal_and_value(self):
-        value = self.loyalty
-        value = value * (1 - COST_OF_CHILD)**self.num_children
-        signal = value * self.true_signal
-        value -= (signal / 10)
-        if (self.false_signal / 10) <= value:
+        value = self.quality
+        # value = value * (1 - COST_OF_CHILD)**self.num_children
+        signal = value**2 * self.true_signal
+        value -= signal
+        if self.false_signal <= value:
             signal += self.false_signal
-            value -= (self.false_signal / 10)
+            value -= self.false_signal
         else:
-            signal += (value * 10)
+            signal += value
             value = 0
         return signal, value
