@@ -73,3 +73,5 @@ class Logger:
             self._output(output, mode='PROGR', delimiter='')
         else:
             self._output(output, mode='PROGR', erase=True, delimiter='')
+
+    # def record_csv(self, )
