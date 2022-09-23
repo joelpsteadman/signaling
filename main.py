@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 logger = Logger(debug=True)
 
 POPULATION_SIZE = 1000
-GENERATIONS = 5000
+GENERATIONS = 1000
 
 population = Population(POPULATION_SIZE)
 
@@ -19,7 +19,6 @@ with open(filename, 'w') as output_file:
     headers = ['Signal', 'Trust']
     csv_writer = csv.writer(output_file) 
     csv_writer.writerow(headers)
-
 
 for i in range(GENERATIONS):
     if not logger.show_debugging:
@@ -114,4 +113,4 @@ if logger.show_debugging:
 
     plt.hist(trust_dist)
     plt.hist(signal_dist)
-    plt.show() 
+    # plt.show() 

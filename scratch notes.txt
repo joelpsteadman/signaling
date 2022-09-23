@@ -1,0 +1,56 @@
+signal_strength = mx+b
+m = -1/quality
+x = quality*signal_effort
+b = 1
+signal_strength = (-1/quality)*(quality*signal_effort) + 1
+signal_strength = 1 - signal_effort
+A = y*x = (1 - signal_effort) * quality*signal_effort
+  = quality*signal_effort - quality*signal_effort^2
+
+  .5*E - .5*E^2
+
+
+S = mx+b
+m = -1/(.25 + quality/2)
+x = .25 + (Q*E)
+b = 1
+
+S = (-1/.25 + Q/2)(.25 + (Q*E)) + 1
+A = y*x = ((-1/.25 + Q/2)(.25 + (Q*E)) + 1)*(.25 + (Q*E))
+
+What if m was equal to -q ???
+S = mx+1
+  = -Q(Q*(1-E))
+  = -Q(Q-EQ)
+  = -Q^2 - EQ^2
+
+x = V
+V + E = Q
+Q - E = V
+
+V * m + 1 = S
+
+S = m * V + 1
+S = 
+
+m = -1/((.25 + Q/2) -.25)
+m = 
+
+S = (-1/Q)*Q(1-.5) + 1
+  = -.5 + 1
+  = 
+
+S = (-V^2 / Q) + 1
+A = V * S = V *((-V^2 / Q) + 1)
+A = (-V^3 / Q) + V
+
+A'= 1 - 3V^2/Q
+0 = 1 - 3V^2/Q
+-1= -3V^2/Q
+Q = -3V^2
+Q/-3 = V^2
+sqrt(Q/-3) = V = 1 - E
+1 - E = sqrt(Q/-3)
+-E = sqrt(Q/-3) - 1
+E = -sqrt(Q/-3) + 1
+
