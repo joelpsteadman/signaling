@@ -3,7 +3,7 @@ import random
 
 COST_OF_CHILD = 0.5
 MIN_TRUST = 0.01
-INHERITANCE_NOISE = 0
+INHERITANCE_NOISE = .5
 
 class Individual:
     def __init__(self, mother = 0, father = 0):
@@ -16,7 +16,7 @@ class Individual:
     def _init_no_parents(self):
         self.sex = random.choice(['M', 'F'])
         self.quality = random.uniform(0.01, 0.99)
-        self.signaling_effort = random.uniform(0.90, 0.99)
+        self.signaling_effort = random.uniform(0.01, 0.99)
         self.trust = random.uniform(MIN_TRUST, 0.99)
         self.signal, self.value = self._calculate_signal_and_value()
 

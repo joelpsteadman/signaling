@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 logger = Logger(debug=True)
 
 POPULATION_SIZE = 1000
-GENERATIONS = 100
+GENERATIONS = 1000
 
 population = Population(POPULATION_SIZE)
 
