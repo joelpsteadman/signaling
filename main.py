@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 logger = Logger(debug=True)
 
 POPULATION_SIZE = 1000
-GENERATIONS = 1000
+GENERATIONS = 100
 
 population = Population(POPULATION_SIZE)
 
@@ -16,8 +16,8 @@ filename = "output.csv"
 # writing to csv file 
 with open(filename, 'w') as output_file: 
 
-    headers = ['Signal', 'Trust']
-    csv_writer = csv.writer(output_file) 
+    headers = ['N', 'Signal Effort', 'Trust', 'Signal', 'Value']
+    csv_writer = csv.writer(output_file)
     csv_writer.writerow(headers)
 
 for i in range(GENERATIONS):
@@ -38,52 +38,59 @@ for i in range(GENERATIONS):
 
     if logger.show_debugging:
         average_quality = 0
-        average_true_signal = 0
+        average_signaling_effort = 0
         average_trust = 0
+        average_perceived_signal = 0
+        average_value_after_signaling = 0
         for male in population.males:
             average_quality += male.quality
-            average_true_signal += male.true_signal
+            average_signaling_effort += male.signaling_effort
             average_trust += male.trust
+            average_perceived_signal += male.signal
+            average_value_after_signaling += male.value
         for female in population.females:
             average_quality += female.quality
-            average_true_signal += female.true_signal
+            average_signaling_effort += female.signaling_effort
             average_trust += female.trust
         average_quality /= POPULATION_SIZE
-        average_true_signal /= POPULATION_SIZE
+        average_signaling_effort /= POPULATION_SIZE
         average_trust /= POPULATION_SIZE
+        average_perceived_signal /= len(population.males)
+        average_value_after_signaling /= len(population.males)
 
-            
         # writing to csv file 
         with open(filename, 'a') as output_file: 
-            row = [average_true_signal, average_trust]
+            row = [i+1, average_signaling_effort, average_trust, average_perceived_signal, average_value_after_signaling]
             csv_writer = csv.writer(output_file) 
             csv_writer.writerow(row)
 
-        logger.debug(buffer, " average_quality      ", str(round(100*average_quality)), '%', delimiter='')
-        logger.debug(buffer, " average_true_signal  ", str(round(100*average_true_signal)), '%', delimiter='')
-        logger.debug(buffer, " average_trust        ", str(round(100*average_trust)), '%', delimiter='')
+        logger.debug(buffer, " average_quality               ", str(round(100*average_quality)), '%', delimiter='')
+        logger.debug(buffer, " average_signaling_effort      ", str(round(100*average_signaling_effort)), '%', delimiter='')
+        logger.debug(buffer, " average_trust                 ", str(round(100*average_trust)), '%', delimiter='')
+        logger.debug(buffer, " average_perceived_signal      ", str(round(100*average_perceived_signal)), '%', delimiter='')
+        logger.debug(buffer, " average_value_after_signaling ", str(round(100*average_value_after_signaling)), '%', delimiter='')
 
 if not logger.show_debugging:
     logger.display_progress("Evolving: ", GENERATIONS, GENERATIONS, final=True)
 
     average_quality = 0
-    average_true_signal = 0
+    average_signaling_effort = 0
     average_trust = 0
     for male in population.males:
         average_quality += male.quality
-        average_true_signal += male.true_signal
+        average_signaling_effort += male.signaling_effort
         average_trust += male.trust
     for female in population.females:
         average_quality += female.quality
-        average_true_signal += female.true_signal
+        average_signaling_effort += female.signaling_effort
         average_trust += female.trust
     average_quality /= POPULATION_SIZE
-    average_true_signal /= POPULATION_SIZE
+    average_signaling_effort /= POPULATION_SIZE
     average_trust /= POPULATION_SIZE
 
-    logger.info(buffer, " average_quality      ", str(round(100*average_quality)), '%', delimiter='')
-    logger.info(buffer, " average_true_signal  ", str(round(100*average_true_signal)), '%', delimiter='')
-    logger.info(buffer, " average_trust        ", str(round(100*average_trust)), '%', delimiter='')
+    logger.info(buffer, " average_quality          ", str(round(100*average_quality)), '%', delimiter='')
+    logger.info(buffer, " average_signaling_effort ", str(round(100*average_signaling_effort)), '%', delimiter='')
+    logger.info(buffer, " average_trust            ", str(round(100*average_trust)), '%', delimiter='')
 
 logger.debug("Done!")
 
@@ -106,10 +113,10 @@ if logger.show_debugging:
     signal_dist = []
     for male in population.males:
         trust_dist.append(male.trust)
-        signal_dist.append(male.true_signal)
+        signal_dist.append(male.signaling_effort)
     for female in population.females:
         trust_dist.append(female.trust)
-        signal_dist.append(female.true_signal)
+        signal_dist.append(female.signaling_effort)
 
     plt.hist(trust_dist)
     plt.hist(signal_dist)

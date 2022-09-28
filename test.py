@@ -1,7 +1,11 @@
-l = [1,2,3,4,5,6]
+import random
 
-element = l.pop(0)
-l.append(element)
+def calculate():
+    x = random.random()
+    y = 2*x
+    return x, y
 
-print(l)
+a, b = calculate()
+
+print(a,b)
 
