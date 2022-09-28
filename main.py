@@ -1,4 +1,4 @@
-from Population import Population
+from Models.Population import Population
 from Utilities import Logger
 import csv
 import matplotlib.pyplot as plt
