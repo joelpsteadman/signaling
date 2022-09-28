@@ -6,32 +6,47 @@ import matplotlib.pyplot as plt
 logger = Logger(debug=True)
 
 POPULATION_SIZE = 1000
-GENERATIONS = 1000
+GENERATIONS = 100
+uuid = 0
+def next_uuid():
+    global uuid
+    uuid += 1
+    return uuid
 
 population = Population(POPULATION_SIZE)
 
-# name of csv file 
+# name of csv files
 filename = "output.csv"
+database = "database.csv"
     
-# writing to csv file 
+# writing to csv files
 with open(filename, 'w') as output_file: 
-
     headers = ['N', 'Signal Effort', 'Trust', 'Signal', 'Value']
     csv_writer = csv.writer(output_file)
+    csv_writer.writerow(headers)
+with open(database, 'w') as database_file: 
+    headers = ["UUID", "Generation", "Sex", "Quality", "Effort", "Signal", "Value", "Trust", "Area", "Children", "Successors"]
+    csv_writer = csv.writer(database_file)
     csv_writer.writerow(headers)
 
 for i in range(GENERATIONS):
     if not logger.show_debugging:
         logger.display_progress("Evolving: ", i, GENERATIONS)
     previous_generation = population.evolve()
-    max_children_male = 0
-    max_children_female = 0
-    for male in previous_generation["males"]:
-        if male.num_children > max_children_male:
-            max_children_male = male.num_children
-    for female in previous_generation["females"]:
-        if female.num_children > max_children_female:
-            max_children_female = female.num_children
+    with open(database, 'a') as database_file:
+        csv_writer = csv.writer(database_file)
+        max_children_male = 0
+        max_children_female = 0
+        for male in previous_generation["males"]:
+            if male.num_children > max_children_male:
+                max_children_male = male.num_children
+            row = [next_uuid(), i, 'M', male.quality, male.signaling_effort, male.signal, male.value, male.trust, (male.signal*male.value), male.num_children, male.num_surviving_children]
+            csv_writer.writerow(row)
+        for female in previous_generation["females"]:
+            if female.num_children > max_children_female:
+                max_children_female = female.num_children
+            row = [next_uuid(), i, 'F', female.quality, female.signaling_effort, female.signal, female.value, female.trust, (female.signal*female.value), female.num_children, female.num_surviving_children]
+            csv_writer.writerow(row)
     buffer = " "*len("Generation " + str(i))
     logger.debug("Generation", i, "max_children_male:  ", max_children_male)
     logger.debug(buffer, "max_children_female:", max_children_female)

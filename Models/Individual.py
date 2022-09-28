@@ -2,7 +2,7 @@
 import random
 
 COST_OF_CHILD = 0.5
-MIN_TRUST = 0.01
+MIN_TRUST = 0.99
 INHERITANCE_NOISE = .5
 
 class Individual:
@@ -12,6 +12,7 @@ class Individual:
         else:
             self._init_with_parents(mother, father)
         self.num_children = 0
+        self.num_surviving_children = 0
 
     def _init_no_parents(self):
         self.sex = random.choice(['M', 'F'])
