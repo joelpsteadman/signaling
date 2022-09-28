@@ -1,4 +1,4 @@
-from Individual import Individual
+from Models.Individual import Individual
 import random
 
 SAMPLE_SIZE = 10 # number of men that each woman considers
@@ -27,6 +27,8 @@ class Population:
             fitness = male.value
             if fitness >= random.random(): # thus, a child with fitness .7 has .7 likelihood of getting into next gen
                 next_generation.append(child)
+                female.num_surviving_children += 1
+                male.num_surviving_children += 1
             self.females.append(female)
         previous_generation = {"males": self.males, "females": self.females}
 
