@@ -2,7 +2,7 @@
 import random
 
 COST_OF_CHILD = 0.5
-MIN_TRUST = 0.99
+MIN_TRUST = 0.01
 INHERITANCE_NOISE = .5
 
 class Individual:
