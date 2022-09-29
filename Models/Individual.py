@@ -59,12 +59,10 @@ class Individual:
         # value = self.quality * (1 - signal)
         # return signal, value
 
-        signal = self.signaling_effort * self.quality**2
+        signal = self.signaling_effort * self.quality
         value = self.quality * (1 - self.signaling_effort)
         return signal, value
 
         # signal = self.quality + self.signaling_effort
         # value = self.quality - self.signaling_effort
         # return signal, value
-
-        # TODO why is average quality increasing over generations?
