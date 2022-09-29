@@ -1,7 +1,6 @@
 from Models.Population import Population
 from Utilities import Logger
 import csv
-import matplotlib.pyplot as plt
 
 logger = Logger(debug=True)
 
@@ -16,8 +15,8 @@ def next_uuid():
 population = Population(POPULATION_SIZE)
 
 # name of csv files
-filename = "output.csv"
-database = "database.csv"
+filename = "./OutputFiles/output.csv"
+database = "./OutputFiles/database.csv"
     
 # writing to csv files
 with open(filename, 'w') as output_file: 
@@ -108,31 +107,3 @@ if not logger.show_debugging:
     logger.info(buffer, " average_trust            ", str(round(100*average_trust)), '%', delimiter='')
 
 logger.debug("Done!")
-
-if logger.show_debugging:
-    x = []
-    # with open(filename, 'r') as data:
-    #     # creating a csv reader object
-    #     csv_reader = csv.reader(data)
-        
-    #     # extracting field names through first row
-    #     fields = next(csv_reader)
-    
-    #     # extracting each data row one by one
-    #     for row in csv_reader:
-    #         x.append(list(row[0] for i in included_cols))
-    #         content = list(row[i] for i in included_cols)
-    #         print content
-
-    trust_dist = []
-    signal_dist = []
-    for male in population.males:
-        trust_dist.append(male.trust)
-        signal_dist.append(male.signaling_effort)
-    for female in population.females:
-        trust_dist.append(female.trust)
-        signal_dist.append(female.signaling_effort)
-
-    plt.hist(trust_dist)
-    plt.hist(signal_dist)
-    # plt.show() 
