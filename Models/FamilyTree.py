@@ -1,5 +1,3 @@
-# from Individual import Individual
-
 class FamilyTree:
     def __init__(self, population_size):
         self.POPULATION_SIZE = population_size

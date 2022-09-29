@@ -14,11 +14,9 @@ def next_uuid():
 
 population = Population(POPULATION_SIZE)
 
-# name of csv files
 filename = "./OutputFiles/output.csv"
 database = "./OutputFiles/database.csv"
     
-# writing to csv files
 with open(filename, 'w') as output_file: 
     headers = ['N', 'Signal Effort', 'Trust', 'Signal', 'Value']
     csv_writer = csv.writer(output_file)
@@ -72,7 +70,6 @@ for i in range(GENERATIONS):
         average_perceived_signal /= len(population.males)
         average_value_after_signaling /= len(population.males)
 
-        # writing to csv file 
         with open(filename, 'a') as output_file: 
             row = [i+1, average_signaling_effort, average_trust, average_perceived_signal, average_value_after_signaling]
             csv_writer = csv.writer(output_file) 

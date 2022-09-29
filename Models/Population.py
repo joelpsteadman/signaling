@@ -22,10 +22,8 @@ class Population:
         while len(next_generation) < self.size:
             female = self.females.pop(0)
             child, male = self._pick_male(female)
-            # fitness = (value + female.quality) / 2
-            # fitness = value
-            fitness = male.value
-            if fitness >= random.random(): # thus, a child with fitness .7 has .7 likelihood of getting into next gen
+            fitness = male.value # thus, when the father's value is .7, the child has .7 likelihood of getting into next gen
+            if fitness >= random.random():
                 next_generation.append(child)
                 female.num_surviving_children += 1
                 male.num_surviving_children += 1
@@ -46,7 +44,9 @@ class Population:
         return previous_generation
 
     def _pick_male(self, female):
-        if female.trust > random.uniform(.1,.9): # trust must reach a random threshold to rely on signaling
+        # A trust of .7 gives a .7 likelihood of using signaling as a measure of value
+        # Above the .1 or .9 threasholds, trust is never or always used respectively
+        if female.trust > random.uniform(.1,.9):
             while True:
                 male = random.choice(self.males)
                 if male.signal >= random.uniform(0,1): # therefore a signal of strength .7 has a .7 chance of being picked
@@ -63,6 +63,8 @@ class Population:
 
     def _pick_male_from_group(self, female):
         males = random.sample(self.males, SAMPLE_SIZE)
+        # A trust of .7 gives a .7 likelihood of using signaling as a measure of value
+        # Above the .1 or .9 threasholds, trust is never or always used respectively
         if female.trust > random.uniform(.1,.9):
             signals = []
             values = []
@@ -71,11 +73,11 @@ class Population:
                 signals.append(male.signal)
                 values.append(male.value)
             for i in range(len(signals)):
-                perceived_values.append(female.trust * signals[i])# + random.uniform(-0.1, 0.1))
+                perceived_values.append(female.trust * signals[i])
             max_perceived_value = max(perceived_values)
             max_index = perceived_values.index(max_perceived_value)
             selected_male = males[max_index]
-        else:
+        else: # otherwise, pick someone random
             selected_male = random.choice(males)
         child = Individual(female, selected_male)
         female.num_children += 1

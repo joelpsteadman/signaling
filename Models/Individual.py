@@ -1,4 +1,3 @@
-# from signal import signal
 import random
 
 COST_OF_CHILD = 0.5
@@ -23,7 +22,6 @@ class Individual:
 
     def _init_with_parents(self, mother, father):
         self.sex = random.choice(['M', 'F'])
-        # self.quality = self._inherit_trait(mother.quality, father.quality)
         self.quality = random.uniform(0.01, 0.99)
         self.signaling_effort = self._inherit_trait(mother.signaling_effort, father.signaling_effort)
         self.trust = self._inherit_trust(mother.trust, father.trust)
@@ -42,27 +40,6 @@ class Individual:
         return trait
 
     def _calculate_signal_and_value(self):
-        # value = self.quality
-        # signaling_difficulty = 1 - self.quality # using division instead of subtraction so that values can pass 0
-        # signal = self.quality * self.signaling_effort / signaling_difficulty
-        # signal = signal**0.5
-        # signal = signal * (1 - COST_OF_CHILD)**self.num_children
-        # value = self.quality - (self.quality * self.signaling_effort)
-        # return signal, value
-
-        # value = self.quality * (1 - self.signaling_effort)
-        # signal = -1 / value
-        # return signal, value
-
-        # optimal signal is sqrt(quality)/sqrt(3)???
-        # signal = (self.quality**.5)/(3**.5)
-        # value = self.quality * (1 - signal)
-        # return signal, value
-
         signal = self.signaling_effort * self.quality
         value = self.quality * (1 - self.signaling_effort)
         return signal, value
-
-        # signal = self.quality + self.signaling_effort
-        # value = self.quality - self.signaling_effort
-        # return signal, value
